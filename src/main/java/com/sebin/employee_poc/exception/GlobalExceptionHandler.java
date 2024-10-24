@@ -8,9 +8,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(DepartmentNotFoundException.class)
     public ResponseEntity<ApiResponse> handleDepartmentNotFound(DepartmentNotFoundException ex){
         ApiResponse response = new ApiResponse(HttpStatus.NOT_FOUND.value(),ex.getMessage());
+        return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<ApiResponse> handleEmployeeNotFound(EmployeeNotFoundException ex){
+        ApiResponse response = new ApiResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
     }
 

@@ -18,7 +18,7 @@ public class DepartmentRepository {
 
     public List<DepartmentEntity> findAll(){
         String sql= "SELECT * FROM department";
-        return jdbcTemplate.query(sql, (rs,rowNum)-> new DepartmentEntity(
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new DepartmentEntity(
             rs.getInt("departmentId"),
             rs.getString("departmentName"),
             rs.getString("location")
