@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class DepartmentRepository {
@@ -21,5 +22,37 @@ public class DepartmentRepository {
             rs.getString("departmentName"),
             rs.getString("location")
         ));
+    }
+
+    public Optional<DepartmentEntity> findById(int departmentId){
+        String sql= "SELECT * FROM department WHERE departmentId="+departmentId;
+        return jdbcTemplate.query(sql, rs -> {
+            rs.next();
+            return Optional.of(new DepartmentEntity(
+                    rs.getInt("departmentId"),
+                    rs.getString("departmentName"),
+                    rs.getString("location")
+            ));
+        });
+    }
+
+    public int save(DepartmentEntity departmentEntity){
+        String sql = "INSERT INTO department (departmentName, location) VALUES (?,?)";
+        return jdbcTemplate.update(sql,
+                departmentEntity.getDepartmentName(),
+                departmentEntity.getLocation());
+    }
+
+    public int update(DepartmentEntity departmentEntity){
+        String sql = "UPDATE department SET departmentName=?, location=? WHERE departmentId=?";
+        return jdbcTemplate.update(sql,
+                departmentEntity.getDepartmentName(),
+                departmentEntity.getLocation(),
+                departmentEntity.getDepartmentId());
+    }
+
+    public int deleteById(int departmentId){
+        String sql = "DELETE FROM department WHERE departmentId="+departmentId;
+        return jdbcTemplate.update(sql);
     }
 }

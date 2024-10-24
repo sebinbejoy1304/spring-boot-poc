@@ -3,9 +3,7 @@ package com.sebin.employee_poc.controller;
 import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,5 +16,25 @@ public class DepartmentController {
     @GetMapping("departments")
     public List<DepartmentEntity> getAllDepartments(){
         return departmentService.getAllDepartments();
+    }
+
+    @GetMapping("department/{departmentId}")
+    public DepartmentEntity getDepartmentById(@PathVariable int departmentId){
+        return departmentService.getDepartmentById(departmentId).get();
+    }
+
+    @PostMapping("department/add")
+    public int addDepartment(@RequestBody DepartmentEntity departmentEntity){
+        return departmentService.addDepartment(departmentEntity);
+    }
+
+    @PutMapping("department/{departmentId}")
+    public int updateDepartment(@PathVariable int departmentId){
+        return departmentService.updateDepartment(departmentId);
+    }
+
+    @DeleteMapping("department/{departmentId}")
+    public int deleteDepartment(@PathVariable int departmentId){
+        return departmentService.deleteDepartment(departmentId);
     }
 }
