@@ -25,4 +25,17 @@ public class EmployeeService {
     public int addEmployee(EmployeeEntity employeeEntity){
         return employeeRepository.save(employeeEntity);
     }
+
+    public int updateEmployee(int employeeId){
+        EmployeeEntity existingEmployee = employeeRepository.findById(employeeId)
+                .orElseThrow(()->new EmployeeNotFoundException("Employee not found with id:"+employeeId));
+        existingEmployee.setSalary(0);
+        return employeeRepository.update(existingEmployee);
+    }
+
+    public int deleteEmployee(int employeeId){
+        employeeRepository.findById(employeeId)
+                .orElseThrow(()->new EmployeeNotFoundException("Employee not found with id:"+employeeId));
+        return employeeRepository.delete(employeeId);
+    }
 }

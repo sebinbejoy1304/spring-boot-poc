@@ -58,4 +58,21 @@ public class EmployeeRepository {
                 employeeEntity.getSalary(),
                 employeeEntity.getDepartmentId());
     }
+
+    public int update(EmployeeEntity employeeEntity){
+        String sql = "UPDATE employee SET firstName=?,lastName=?,jobRole=?,salary=?,departmentId=? WHERE employeeId=?";
+        return jdbcTemplate.update(sql,
+                employeeEntity.getFirstName(),
+                employeeEntity.getLastName(),
+                employeeEntity.getJobRole(),
+                employeeEntity.getSalary(),
+                employeeEntity.getDepartmentId(),
+                employeeEntity.getEmployeeId()
+        );
+    }
+
+    public int delete(int employeeId){
+        String sql = "DELETE FROM employee WHERE employeeId="+employeeId;
+        return jdbcTemplate.update(sql);
+    }
 }
