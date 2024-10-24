@@ -1,6 +1,7 @@
 package com.sebin.employee_poc.repository;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
+import com.sebin.employee_poc.exception.DepartmentNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -27,12 +28,15 @@ public class DepartmentRepository {
     public Optional<DepartmentEntity> findById(int departmentId){
         String sql= "SELECT * FROM department WHERE departmentId="+departmentId;
         return jdbcTemplate.query(sql, rs -> {
-            rs.next();
-            return Optional.of(new DepartmentEntity(
-                    rs.getInt("departmentId"),
-                    rs.getString("departmentName"),
-                    rs.getString("location")
-            ));
+            if(rs.next()) {
+                return Optional.of(new DepartmentEntity(
+                        rs.getInt("departmentId"),
+                        rs.getString("departmentName"),
+                        rs.getString("location")
+                ));
+            }
+            else
+                return Optional.empty();
         });
     }
 

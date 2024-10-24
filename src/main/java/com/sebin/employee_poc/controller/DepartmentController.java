@@ -20,7 +20,7 @@ public class DepartmentController {
 
     @GetMapping("department/{departmentId}")
     public DepartmentEntity getDepartmentById(@PathVariable int departmentId){
-        return departmentService.getDepartmentById(departmentId).get();
+        return departmentService.getDepartmentById(departmentId);
     }
 
     @PostMapping("department/add")
