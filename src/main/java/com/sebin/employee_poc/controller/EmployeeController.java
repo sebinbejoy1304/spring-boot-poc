@@ -54,4 +54,9 @@ public class EmployeeController {
     public EmployeeResponse getMaxSalary(){
         return employeeService.getEmployeeWithMaxSalary();
     }
+
+    @GetMapping("department/maxSalary/{departmentId}")
+    public EmployeeResponse getMaxSalaryByDepartment(@PathVariable int departmentId){
+        return employeeService.getMaxSalaryByDepartment(departmentId);
+    }
 }

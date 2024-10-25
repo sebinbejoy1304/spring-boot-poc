@@ -83,6 +83,15 @@ public class EmployeeService {
     public EmployeeResponse getEmployeeWithMaxSalary(){
         return mapToEmployeeResponse(employeeRepository.findAll().stream()
                 .collect(Collectors.maxBy(Comparator.comparing(EmployeeEntity::getSalary)))
-                .get());
+                .get()
+        );
+    }
+
+    public EmployeeResponse getMaxSalaryByDepartment(int departmentId){
+        return mapToEmployeeResponse(employeeRepository.findAll().stream()
+                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
+                .collect(Collectors.maxBy(Comparator.comparing(EmployeeEntity::getSalary)))
+                .orElseThrow(()->new DepartmentNotFoundException("Department not found with id:"+departmentId))
+        );
     }
 }
