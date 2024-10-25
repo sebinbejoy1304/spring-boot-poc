@@ -1,6 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
+import com.sebin.employee_poc.model.ApiResponse;
 import com.sebin.employee_poc.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,17 +25,17 @@ public class DepartmentController {
     }
 
     @PostMapping("department/add")
-    public int addDepartment(@RequestBody DepartmentEntity departmentEntity){
+    public ApiResponse addDepartment(@RequestBody DepartmentEntity departmentEntity){
         return departmentService.addDepartment(departmentEntity);
     }
 
     @PutMapping("department/{departmentId}")
-    public int updateDepartment(@PathVariable int departmentId){
+    public ApiResponse updateDepartment(@PathVariable int departmentId){
         return departmentService.updateDepartment(departmentId);
     }
 
     @DeleteMapping("department/{departmentId}")
-    public int deleteDepartment(@PathVariable int departmentId){
+    public ApiResponse deleteDepartment(@PathVariable int departmentId){
         return departmentService.deleteDepartment(departmentId);
     }
 }

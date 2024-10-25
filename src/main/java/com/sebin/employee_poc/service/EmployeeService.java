@@ -3,6 +3,7 @@ package com.sebin.employee_poc.service;
 import com.sebin.employee_poc.entity.EmployeeEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
 import com.sebin.employee_poc.exception.EmployeeNotFoundException;
+import com.sebin.employee_poc.model.ApiResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import com.sebin.employee_poc.repository.EmployeeRepository;
@@ -50,20 +51,23 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public int addEmployee(EmployeeEntity employeeEntity) {
-        return employeeRepository.save(employeeEntity);
+    public ApiResponse addEmployee(EmployeeEntity employeeEntity) {
+        employeeRepository.save(employeeEntity);
+        return new ApiResponse(200,"Employee Added successfully");
     }
 
-    public int updateEmployee(int employeeId) {
+    public ApiResponse updateEmployee(int employeeId) {
         EmployeeEntity existingEmployee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
         existingEmployee.setSalary(0);
-        return employeeRepository.update(existingEmployee);
+        employeeRepository.update(existingEmployee);
+        return new ApiResponse(200,"Employee updated successfully (set salary=0)");
     }
 
-    public int deleteEmployee(int employeeId) {
+    public ApiResponse deleteEmployee(int employeeId) {
         employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
-        return employeeRepository.delete(employeeId);
+        employeeRepository.delete(employeeId);
+        return new ApiResponse(200,"Employee deleted successfully");
     }
 }

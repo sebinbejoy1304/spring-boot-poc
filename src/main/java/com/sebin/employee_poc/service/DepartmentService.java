@@ -2,6 +2,7 @@ package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
+import com.sebin.employee_poc.model.ApiResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,20 +24,23 @@ public class DepartmentService {
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
     }
 
-    public int addDepartment(DepartmentEntity departmentEntity){
-        return departmentRepository.save(departmentEntity);
+    public ApiResponse addDepartment(DepartmentEntity departmentEntity){
+        departmentRepository.save(departmentEntity);
+        return new ApiResponse(200,"Department added successfully");
     }
 
-    public int updateDepartment(int departmentId){
+    public ApiResponse updateDepartment(int departmentId){
         DepartmentEntity existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
         existingDepartment.setLocation("Kochi");
-        return departmentRepository.update(existingDepartment);
+        departmentRepository.update(existingDepartment);
+        return new ApiResponse(200,"Department updated successfully (set location=kochi)");
     }
 
-    public int deleteDepartment(int departmentId){
+    public ApiResponse deleteDepartment(int departmentId){
         departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
-        return departmentRepository.deleteById(departmentId);
+        departmentRepository.deleteById(departmentId);
+        return new ApiResponse(200,"Department deleted successfully");
     }
 }
