@@ -49,6 +49,20 @@ public class EmployeeRepository {
         });
     }
 
+    public List<EmployeeEntity> findEmployeesByDepartment(int departmentId){
+        String sql= "SELECT * FROM employee WHERE departmentId="+departmentId;
+        return jdbcTemplate.query(sql, (rs,rowNum) -> new EmployeeEntity(
+            rs.getInt("employeeId"),
+            rs.getString("firstName"),
+            rs.getString("lastName"),
+            rs.getString("jobRole"),
+            rs.getDouble("salary"),
+            rs.getInt("departmentId"),
+            rs.getTimestamp("createdDateTime").toLocalDateTime(),
+            rs.getTimestamp("modifiedDateTime").toLocalDateTime()
+        ));
+    }
+
     public int save(EmployeeEntity employeeEntity){
         String sql = "INSERT INTO employee(firstName,lastName,jobRole,salary,departmentId) VALUES(?,?,?,?,?)";
         return jdbcTemplate.update(sql,

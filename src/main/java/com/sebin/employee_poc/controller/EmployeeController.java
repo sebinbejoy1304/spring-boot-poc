@@ -1,6 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.EmployeeEntity;
+import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +15,18 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping("employees")
-    public List<EmployeeEntity> getAllEmployees(){
+    public List<EmployeeResponse> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
 
     @GetMapping("employee/{employeeId}")
-    public EmployeeEntity getEmployeeById(@PathVariable int employeeId){
+    public EmployeeResponse getEmployeeById(@PathVariable int employeeId){
         return employeeService.getEmployeeById(employeeId);
+    }
+
+    @GetMapping("employee/department/{departmentId}")
+    public List<EmployeeResponse> getEmployeesByDepartment(@PathVariable int departmentId){
+        return employeeService.getEmployeesByDepartment(departmentId);
     }
 
     @PostMapping("employee/add")
