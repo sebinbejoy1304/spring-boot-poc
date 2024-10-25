@@ -44,4 +44,9 @@ public class EmployeeController {
     public ApiResponse deleteEmployee(@PathVariable int employeeId){
         return employeeService.deleteEmployee(employeeId);
     }
+
+    @GetMapping("department/averageSalary/{departmentId}")
+    public double getAverageSalaryInDepartment(@PathVariable int departmentId){
+        return employeeService.getAverageSalaryInDepartment(departmentId);
+    }
 }

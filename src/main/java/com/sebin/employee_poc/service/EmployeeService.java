@@ -70,4 +70,12 @@ public class EmployeeService {
         employeeRepository.delete(employeeId);
         return new ApiResponse(200,"Employee deleted successfully");
     }
+
+    public double getAverageSalaryInDepartment(int departmentId){
+        departmentRepository.findById(departmentId)
+                .orElseThrow(()->new DepartmentNotFoundException("Department not found with id:"+departmentId));
+        return employeeRepository.findAll().stream()
+                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
+                .collect(Collectors.averagingDouble(EmployeeEntity::getSalary));
+    }
 }
