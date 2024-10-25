@@ -43,7 +43,9 @@ public class EmployeeService {
     public List<EmployeeResponse> getEmployeesByDepartment(int departmentId) {
         departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department not found with id:"+departmentId));
-        return employeeRepository.findEmployeesByDepartment(departmentId).stream()
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee->employee.getDepartmentId()==departmentId)
                 .map(this::mapToEmployeeResponse)
                 .collect(Collectors.toList());
     }

@@ -11,3 +11,6 @@ public class EmployeePocApplication {
 	}
 
 }
+
+//Handle delete employees
+//Do unit testing
