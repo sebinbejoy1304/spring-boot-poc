@@ -10,6 +10,7 @@ import com.sebin.employee_poc.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,5 +78,11 @@ public class EmployeeService {
         return employeeRepository.findAll().stream()
                 .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
                 .collect(Collectors.averagingDouble(EmployeeEntity::getSalary));
+    }
+
+    public EmployeeResponse getEmployeeWithMaxSalary(){
+        return mapToEmployeeResponse(employeeRepository.findAll().stream()
+                .collect(Collectors.maxBy(Comparator.comparing(EmployeeEntity::getSalary)))
+                .get());
     }
 }
