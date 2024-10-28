@@ -76,12 +76,12 @@ public class EmployeeService {
         return new ApiResponse(200,"Employee deleted successfully");
     }
 
-    public double getEmployeeCount(){
+    public long getEmployeeCount(){
         return employeeRepository.findAll().stream()
                 .count();
     }
 
-    public double getEmployeeCountByDepartment(int departmentId){
+    public long getEmployeeCountByDepartment(int departmentId){
         return employeeRepository.findAll().stream()
                 .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
                 .count();

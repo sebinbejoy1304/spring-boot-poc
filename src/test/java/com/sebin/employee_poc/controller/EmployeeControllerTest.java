@@ -1,5 +1,7 @@
 package com.sebin.employee_poc.controller;
 
+import com.sebin.employee_poc.entity.EmployeeEntity;
+import com.sebin.employee_poc.model.ApiResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,16 +33,116 @@ public class EmployeeControllerTest {
 
     @Test
     void getAllEmployeesTest(){
-        EmployeeResponse employee1 = new EmployeeResponse("Sebin","HR",700000,3);
-        EmployeeResponse employee2 = new EmployeeResponse("Padmaprakash","Senior Software Engineer",1500000,1);
-        List<EmployeeResponse> mockEmployees = Arrays.asList(employee1,employee2);
+        EmployeeResponse employee1 = new EmployeeResponse("Shyam","HR",700000,3);
+        EmployeeResponse employee2 = new EmployeeResponse("Priya","Senior Software Engineer",1500000,1);
+        List<EmployeeResponse> mockResponse = Arrays.asList(employee1,employee2);
 
-        when(employeeService.getAllEmployees()).thenReturn(mockEmployees);
+        when(employeeService.getAllEmployees()).thenReturn(mockResponse);
 
-        List<EmployeeResponse> responses= employeeController.getAllEmployees();
+        List<EmployeeResponse> response= employeeController.getAllEmployees();
 
-        assertEquals(2,responses.size());
-        assertEquals(3,responses.get(0).getDepartmentId());
-        assertEquals("Senior Software Engineer",responses.get(1).getJobRole());
+        assertEquals(2,response.size());
+        assertEquals(3,response.get(0).getDepartmentId());
+        assertEquals("Senior Software Engineer",response.get(1).getJobRole());
+    }
+
+    void addEmployeeTest(){
+        EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
+                700000, 1, LocalDateTime.now(), LocalDateTime.now());
+
+        ApiResponse mockResponse = new ApiResponse(200, "Employee added successfully");
+
+        when(employeeService.addEmployee(employeeEntity)).thenReturn(mockResponse);
+
+        ApiResponse response = employeeController.addEmployee(employeeEntity);
+
+        assertEquals(mockResponse, response);
+    }
+
+    void updateEmployeeTest(){
+        int employeeId=3;
+        EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
+                700000, 1, LocalDateTime.now(), LocalDateTime.now());
+
+        ApiResponse mockResponse = new ApiResponse(200, "Employee updated successfully");
+
+        when(employeeService.updateEmployee(employeeId, employeeEntity)).thenReturn(mockResponse);
+
+        ApiResponse response = employeeController.addEmployee(employeeEntity);
+
+        assertEquals(mockResponse, response);
+    }
+
+    @Test
+    void getEmployeeByIdTest(){
+        int employeeId=3;
+        EmployeeResponse mockResponse = new EmployeeResponse("Shyam","HR",700000,3);
+
+        when(employeeService.getEmployeeById(employeeId)).thenReturn(mockResponse);
+
+        EmployeeResponse employeeResponse = employeeController.getEmployeeById(employeeId);
+
+        assertEquals(3,employeeResponse.getDepartmentId());
+    }
+
+    @Test
+    void getEmployeesByDepartmentTest(){
+        int departmentId = 2;
+        EmployeeResponse employee1 = new EmployeeResponse("Shyam","HR",700000,3);
+        EmployeeResponse employee2 = new EmployeeResponse("Priya","Senior Software Engineer",1500000,1);
+        List<EmployeeResponse> mockResponse = Arrays.asList(employee1,employee2);
+
+        when(employeeService.getEmployeesByDepartment(departmentId)).thenReturn(mockResponse);
+
+        List<EmployeeResponse> response = employeeController.getEmployeesByDepartment(departmentId);
+
+        assertEquals(1,response.get(1).getDepartmentId());
+
+    }
+
+    @Test
+    void getEmployeeCountTest(){
+        long mockCount=5;
+
+        when(employeeService.getEmployeeCount()).thenReturn(mockCount);
+
+        long response = employeeController.getEmployeeCount();
+
+        assertEquals(mockCount,response);
+    }
+
+    @Test
+    void getEmployeeCountByDepartmentTest(){
+        long mockCount=5;
+        int departmentId = 3;
+
+        when(employeeService.getEmployeeCountByDepartment(departmentId)).thenReturn(mockCount);
+
+        long response = employeeController.getEmployeeCountByDepartment(departmentId);
+
+        assertEquals(mockCount,response);
+    }
+
+    @Test
+    void getTotalEmployeeSalary(){
+        String mockSalary = "500000";
+
+        when(employeeService.getTotalEmployeeSalary()).thenReturn(String.valueOf(mockSalary));
+
+        String response = employeeController.getTotalEmployeeSalary();
+
+        assertEquals(mockSalary,response);
+    }
+
+    @Test
+    void getTotalEmployeeSalaryByDepartment(){
+        int departmentId=2;
+        String mockSalary = "500000";
+
+        when(employeeService.getTotalEmployeeSalaryByDepartment(departmentId)).thenReturn(String.valueOf(mockSalary));
+
+        String response = employeeController.getTotalEmployeeSalaryByDepartment(departmentId);
+
+        assertEquals(mockSalary,response);
     }
 }

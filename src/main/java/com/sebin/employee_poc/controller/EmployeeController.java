@@ -46,12 +46,12 @@ public class EmployeeController {
     }
 
     @GetMapping("employees/count")
-    public double getEmployeeCount(){
+    public long getEmployeeCount(){
         return employeeService.getEmployeeCount();
     }
 
     @GetMapping("department/employeeCount/{departmentId}")
-    public double getEmployeeCountByDepartment(@PathVariable int departmentId){
+    public long getEmployeeCountByDepartment(@PathVariable int departmentId){
         return employeeService.getEmployeeCountByDepartment(departmentId);
     }
 
