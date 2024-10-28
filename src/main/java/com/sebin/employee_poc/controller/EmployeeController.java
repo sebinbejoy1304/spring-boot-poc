@@ -65,14 +65,4 @@ public class EmployeeController {
         return employeeService.getTotalEmployeeSalaryByDepartment(departmentId);
     }
 
-    @GetMapping("department/averageSalary/{departmentId}")
-    public double getAverageSalaryInDepartment(@PathVariable int departmentId){
-        return employeeService.getAverageSalaryInDepartment(departmentId);
-    }
-
-    @GetMapping("employees/maxSalary")
-    public EmployeeResponse getMaxSalary(){
-        return employeeService.getEmployeeWithMaxSalary();
-    }
-
 }

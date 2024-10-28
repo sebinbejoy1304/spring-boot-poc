@@ -103,27 +103,4 @@ public class EmployeeService {
         String formattedSum = String.format("%.2f",sum);
         return formattedSum;
     }
-
-    public double getAverageSalaryInDepartment(int departmentId){
-        departmentRepository.findById(departmentId)
-                .orElseThrow(()->new DepartmentNotFoundException("Department not found with id:"+departmentId));
-        return employeeRepository.findAll().stream()
-                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
-                .collect(Collectors.averagingDouble(EmployeeEntity::getSalary));
-    }
-
-    public EmployeeResponse getEmployeeWithMaxSalary(){
-        return mapToEmployeeResponse(employeeRepository.findAll().stream()
-                .collect(Collectors.maxBy(Comparator.comparing(EmployeeEntity::getSalary)))
-                .get()
-        );
-    }
-
-    public EmployeeResponse getMaxSalaryByDepartment(int departmentId){
-        return mapToEmployeeResponse(employeeRepository.findAll().stream()
-                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
-                .collect(Collectors.maxBy(Comparator.comparing(EmployeeEntity::getSalary)))
-                .orElseThrow(()->new DepartmentNotFoundException("Department not found with id:"+departmentId))
-        );
-    }
 }
