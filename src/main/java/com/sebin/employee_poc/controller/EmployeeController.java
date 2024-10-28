@@ -36,13 +36,33 @@ public class EmployeeController {
     }
 
     @PutMapping("employee/{employeeId}")
-    public ApiResponse updateEmployee(@PathVariable int employeeId){
-        return employeeService.updateEmployee(employeeId);
+    public ApiResponse updateEmployee(@PathVariable int employeeId, @RequestBody EmployeeEntity employeeEntity){
+        return employeeService.updateEmployee(employeeId, employeeEntity);
     }
 
     @DeleteMapping("employee/{employeeId}")
     public ApiResponse deleteEmployee(@PathVariable int employeeId){
         return employeeService.deleteEmployee(employeeId);
+    }
+
+    @GetMapping("employees/count")
+    public double getEmployeeCount(){
+        return employeeService.getEmployeeCount();
+    }
+
+    @GetMapping("department/employeeCount/{departmentId}")
+    public double getEmployeeCountByDepartment(@PathVariable int departmentId){
+        return employeeService.getEmployeeCountByDepartment(departmentId);
+    }
+
+    @GetMapping("employees/totalSalary")
+    public String getTotalEmployeeSalary(){
+        return employeeService.getTotalEmployeeSalary();
+    }
+
+    @GetMapping("department/totalSalary/{departmentId}")
+    public String getTotalEmployeeSalaryByDepartment(@PathVariable int departmentId){
+        return employeeService.getTotalEmployeeSalaryByDepartment(departmentId);
     }
 
     @GetMapping("department/averageSalary/{departmentId}")
@@ -55,8 +75,4 @@ public class EmployeeController {
         return employeeService.getEmployeeWithMaxSalary();
     }
 
-    @GetMapping("department/maxSalary/{departmentId}")
-    public EmployeeResponse getMaxSalaryByDepartment(@PathVariable int departmentId){
-        return employeeService.getMaxSalaryByDepartment(departmentId);
-    }
 }

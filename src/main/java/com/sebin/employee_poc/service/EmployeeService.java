@@ -57,12 +57,16 @@ public class EmployeeService {
         return new ApiResponse(200,"Employee Added successfully");
     }
 
-    public ApiResponse updateEmployee(int employeeId) {
+    public ApiResponse updateEmployee(int employeeId, EmployeeEntity employeeEntity) {
         EmployeeEntity existingEmployee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
-        existingEmployee.setSalary(0);
+        existingEmployee.setFirstName(employeeEntity.getFirstName());
+        existingEmployee.setLastName(employeeEntity.getLastName());
+        existingEmployee.setJobRole(employeeEntity.getJobRole());
+        existingEmployee.setSalary(employeeEntity.getSalary());
+        existingEmployee.setDepartmentId(employeeEntity.getDepartmentId());
         employeeRepository.update(existingEmployee);
-        return new ApiResponse(200,"Employee updated successfully (set salary=0)");
+        return new ApiResponse(200,"Employee updated successfully");
     }
 
     public ApiResponse deleteEmployee(int employeeId) {
@@ -70,6 +74,34 @@ public class EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
         employeeRepository.delete(employeeId);
         return new ApiResponse(200,"Employee deleted successfully");
+    }
+
+    public double getEmployeeCount(){
+        return employeeRepository.findAll().stream()
+                .count();
+    }
+
+    public double getEmployeeCountByDepartment(int departmentId){
+        return employeeRepository.findAll().stream()
+                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
+                .count();
+    }
+
+    public String getTotalEmployeeSalary(){
+        double sum =  employeeRepository.findAll().stream()
+                .collect(Collectors.summingDouble(EmployeeEntity::getSalary));
+        String formattedSum = String.format("%.2f",sum);
+        return formattedSum;
+    }
+
+    public String getTotalEmployeeSalaryByDepartment(int departmentId){
+        departmentRepository.findById(departmentId)
+                .orElseThrow(()->new DepartmentNotFoundException("Department not found with id:"+departmentId));
+        double sum =  employeeRepository.findAll().stream()
+                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
+                .collect(Collectors.summingDouble(EmployeeEntity::getSalary));
+        String formattedSum = String.format("%.2f",sum);
+        return formattedSum;
     }
 
     public double getAverageSalaryInDepartment(int departmentId){
