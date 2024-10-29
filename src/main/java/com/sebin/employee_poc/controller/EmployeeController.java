@@ -45,24 +45,4 @@ public class EmployeeController {
         return employeeService.deleteEmployee(employeeId);
     }
 
-    @GetMapping("employees/count")
-    public long getEmployeeCount(){
-        return employeeService.getEmployeeCount();
-    }
-
-    @GetMapping("department/employeeCount/{departmentId}")
-    public long getEmployeeCountByDepartment(@PathVariable int departmentId){
-        return employeeService.getEmployeeCountByDepartment(departmentId);
-    }
-
-    @GetMapping("employees/totalSalary")
-    public String getTotalEmployeeSalary(){
-        return employeeService.getTotalEmployeeSalary();
-    }
-
-    @GetMapping("department/totalSalary/{departmentId}")
-    public String getTotalEmployeeSalaryByDepartment(@PathVariable int departmentId){
-        return employeeService.getTotalEmployeeSalaryByDepartment(departmentId);
-    }
-
 }

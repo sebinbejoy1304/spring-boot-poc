@@ -74,32 +74,4 @@ public class EmployeeService {
         employeeRepository.delete(employeeId);
         return new ApiResponse(200,"Employee deleted successfully");
     }
-
-    public long getEmployeeCount(){
-        return employeeRepository.findAll().stream()
-                .count();
-    }
-
-    public long getEmployeeCountByDepartment(int departmentId){
-        return employeeRepository.findAll().stream()
-                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
-                .count();
-    }
-
-    public String getTotalEmployeeSalary(){
-        double sum =  employeeRepository.findAll().stream()
-                .collect(Collectors.summingDouble(EmployeeEntity::getSalary));
-        String formattedSum = String.format("%.2f",sum);
-        return formattedSum;
-    }
-
-    public String getTotalEmployeeSalaryByDepartment(int departmentId){
-        departmentRepository.findById(departmentId)
-                .orElseThrow(()->new DepartmentNotFoundException("Department not found with id:"+departmentId));
-        double sum =  employeeRepository.findAll().stream()
-                .filter(employeeEntity -> employeeEntity.getDepartmentId()==departmentId)
-                .collect(Collectors.summingDouble(EmployeeEntity::getSalary));
-        String formattedSum = String.format("%.2f",sum);
-        return formattedSum;
-    }
 }
