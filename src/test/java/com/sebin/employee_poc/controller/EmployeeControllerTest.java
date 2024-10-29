@@ -26,7 +26,7 @@ public class EmployeeControllerTest {
     private EmployeeController employeeController;
 
     @BeforeEach
-    void setUp(){
+    void setEmployeeController(){
         MockitoAnnotations.openMocks(this);
     }
 
@@ -45,6 +45,7 @@ public class EmployeeControllerTest {
         assertEquals("Senior Software Engineer",responses.get(1).getJobRole());
     }
 
+    @Test
     void addEmployeeTest(){
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
                 700000, 1, LocalDateTime.now(), LocalDateTime.now());
@@ -58,16 +59,30 @@ public class EmployeeControllerTest {
         assertEquals(mockResponse, response);
     }
 
+    @Test
     void updateEmployeeTest(){
         int employeeId=3;
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
                 700000, 1, LocalDateTime.now(), LocalDateTime.now());
-
         ApiResponse mockResponse = new ApiResponse(200, "Employee updated successfully");
 
         when(employeeService.updateEmployee(employeeId, employeeEntity)).thenReturn(mockResponse);
 
-        ApiResponse response = employeeController.addEmployee(employeeEntity);
+        ApiResponse response = employeeController.updateEmployee(employeeId, employeeEntity);
+
+        assertEquals(mockResponse, response);
+    }
+
+    @Test
+    void deleteEmployeeTest(){
+        int employeeId=3;
+        EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
+                700000, 1, LocalDateTime.now(), LocalDateTime.now());
+        ApiResponse mockResponse = new ApiResponse(200, "Employee deleted successfully");
+
+        when(employeeService.deleteEmployee(employeeId)).thenReturn(mockResponse);
+
+        ApiResponse response = employeeController.deleteEmployee(employeeId);
 
         assertEquals(mockResponse, response);
     }
@@ -96,6 +111,5 @@ public class EmployeeControllerTest {
         List<EmployeeResponse> responses = employeeController.getEmployeesByDepartment(departmentId);
 
         assertEquals(1, responses.get(1).getDepartmentId());
-
     }
 }

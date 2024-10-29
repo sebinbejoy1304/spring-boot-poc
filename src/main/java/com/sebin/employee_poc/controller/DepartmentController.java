@@ -30,8 +30,8 @@ public class DepartmentController {
     }
 
     @PutMapping("department/{departmentId}")
-    public ApiResponse updateDepartment(@PathVariable int departmentId){
-        return departmentService.updateDepartment(departmentId);
+    public ApiResponse updateDepartment(@PathVariable int departmentId, @RequestBody DepartmentEntity departmentEntity){
+        return departmentService.updateDepartment(departmentId,departmentEntity);
     }
 
     @DeleteMapping("department/{departmentId}")

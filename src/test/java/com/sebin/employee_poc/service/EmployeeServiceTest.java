@@ -134,8 +134,28 @@ public class EmployeeServiceTest {
         EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
 
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
-        when(employeeRepository.update(employeeEntity)).thenReturn(1);
 
         assertThrows(EmployeeNotFoundException.class,()->employeeService.updateEmployee(employeeId,employeeEntity));
+    }
+
+    @Test
+    void deleteEmployeeTest_employeeExists(){
+        int employeeId=1;
+        when(employeeRepository.findById(employeeId))
+                .thenReturn(Optional.of(new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now())));
+        when(employeeRepository.delete(employeeId))
+                .thenReturn(1);
+
+        ApiResponse response = employeeService.deleteEmployee(employeeId);
+
+        assertEquals(200,response.getCode());
+    }
+
+    @Test
+    void deleteEmployeeTest_employeeDoesNotExist(){
+        int employeeId=1;
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
+
+        assertThrows(EmployeeNotFoundException.class,()->employeeService.deleteEmployee(employeeId));
     }
 }

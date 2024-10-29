@@ -29,10 +29,11 @@ public class DepartmentService {
         return new ApiResponse(200,"Department added successfully");
     }
 
-    public ApiResponse updateDepartment(int departmentId){
+    public ApiResponse updateDepartment(int departmentId, DepartmentEntity departmentEntity){
         DepartmentEntity existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
-        existingDepartment.setLocation("Kochi");
+        existingDepartment.setDepartmentName(departmentEntity.getDepartmentName());
+        existingDepartment.setLocation(departmentEntity.getLocation());
         departmentRepository.update(existingDepartment);
         return new ApiResponse(200,"Department updated successfully (set location=kochi)");
     }
