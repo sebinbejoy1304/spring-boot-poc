@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -35,15 +34,15 @@ public class EmployeeControllerTest {
     void getAllEmployeesTest(){
         EmployeeResponse employee1 = new EmployeeResponse("Shyam","HR",700000,3);
         EmployeeResponse employee2 = new EmployeeResponse("Priya","Senior Software Engineer",1500000,1);
-        List<EmployeeResponse> mockResponse = Arrays.asList(employee1,employee2);
+        List<EmployeeResponse> mockResponses = Arrays.asList(employee1,employee2);
 
-        when(employeeService.getAllEmployees()).thenReturn(mockResponse);
+        when(employeeService.getAllEmployees()).thenReturn(mockResponses);
 
-        List<EmployeeResponse> response= employeeController.getAllEmployees();
+        List<EmployeeResponse> responses= employeeController.getAllEmployees();
 
-        assertEquals(2,response.size());
-        assertEquals(3,response.get(0).getDepartmentId());
-        assertEquals("Senior Software Engineer",response.get(1).getJobRole());
+        assertEquals(2,responses.size());
+        assertEquals(3,responses.get(0).getDepartmentId());
+        assertEquals("Senior Software Engineer",responses.get(1).getJobRole());
     }
 
     void addEmployeeTest(){
@@ -90,13 +89,13 @@ public class EmployeeControllerTest {
         int departmentId = 2;
         EmployeeResponse employee1 = new EmployeeResponse("Shyam","HR",700000,3);
         EmployeeResponse employee2 = new EmployeeResponse("Priya","Senior Software Engineer",1500000,1);
-        List<EmployeeResponse> mockResponse = Arrays.asList(employee1,employee2);
+        List<EmployeeResponse> mockResponses = Arrays.asList(employee1,employee2);
 
-        when(employeeService.getEmployeesByDepartment(departmentId)).thenReturn(mockResponse);
+        when(employeeService.getEmployeesByDepartment(departmentId)).thenReturn(mockResponses);
 
-        List<EmployeeResponse> response = employeeController.getEmployeesByDepartment(departmentId);
+        List<EmployeeResponse> responses = employeeController.getEmployeesByDepartment(departmentId);
 
-        assertEquals(1,response.get(1).getDepartmentId());
+        assertEquals(1, responses.get(1).getDepartmentId());
 
     }
 
