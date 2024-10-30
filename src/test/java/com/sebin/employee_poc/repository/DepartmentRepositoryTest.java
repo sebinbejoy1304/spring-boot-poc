@@ -40,7 +40,7 @@ public class DepartmentRepositoryTest {
 
         List<DepartmentEntity> mockDepartments = Arrays.asList(department1,department2,department3);
 
-        when(jdbcTemplate.query(any(String.class),any(RowMapper.class))).thenReturn(mockDepartments);
+        when(jdbcTemplate.query(eq("SELECT * FROM department"),any(RowMapper.class))).thenReturn(mockDepartments);
 
         List<DepartmentEntity> responses = departmentRepository.findAll();
 
