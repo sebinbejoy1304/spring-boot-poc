@@ -24,18 +24,18 @@ public class DepartmentService {
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
     }
 
-    public ApiResponse addDepartment(DepartmentEntity departmentEntity){
+    public DepartmentEntity addDepartment(DepartmentEntity departmentEntity){
         departmentRepository.save(departmentEntity);
-        return new ApiResponse(200,"Department added successfully");
+        return departmentEntity;
     }
 
-    public ApiResponse updateDepartment(int departmentId, DepartmentEntity departmentEntity){
+    public DepartmentEntity updateDepartment(int departmentId, DepartmentEntity departmentEntity){
         DepartmentEntity existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
         existingDepartment.setDepartmentName(departmentEntity.getDepartmentName());
         existingDepartment.setLocation(departmentEntity.getLocation());
         departmentRepository.update(existingDepartment);
-        return new ApiResponse(200,"Department updated successfully (set location=kochi)");
+        return departmentEntity;
     }
 
     public ApiResponse deleteDepartment(int departmentId){

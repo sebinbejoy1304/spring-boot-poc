@@ -71,13 +71,12 @@ public class DepartmentServiceTest {
     void addDepartmentTest(){
         DepartmentEntity departmentEntity = new DepartmentEntity(1,"IT","Bangalore");
 
-        ApiResponse mockResponse = new ApiResponse(200,"Department added successfully");
         when(departmentRepository.save(departmentEntity))
-                .thenReturn(mockResponse.getCode());
+                .thenReturn(departmentEntity);
 
-        ApiResponse response = departmentService.addDepartment(departmentEntity);
+        DepartmentEntity response = departmentService.addDepartment(departmentEntity);
 
-        assertEquals(mockResponse,response);
+        assertEquals(departmentEntity,response);
     }
 
     @Test
@@ -86,11 +85,11 @@ public class DepartmentServiceTest {
         DepartmentEntity mockDepartment = new DepartmentEntity(1,"IT","Bangalore");
 
         when(departmentRepository.findById(departmentId)).thenReturn(Optional.of(mockDepartment));
-        when(departmentRepository.update(mockDepartment)).thenReturn(1);
+        when(departmentRepository.update(mockDepartment)).thenReturn(mockDepartment);
 
-        ApiResponse response = departmentService.updateDepartment(departmentId,mockDepartment);
+        DepartmentEntity response = departmentService.updateDepartment(departmentId,mockDepartment);
 
-        assertEquals(200,response.getCode());
+        assertEquals(mockDepartment,response);
     }
 
     @Test

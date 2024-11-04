@@ -25,12 +25,12 @@ public class DepartmentController {
     }
 
     @PostMapping("department/add")
-    public ApiResponse addDepartment(@RequestBody DepartmentEntity departmentEntity){
+    public DepartmentEntity addDepartment(@RequestBody DepartmentEntity departmentEntity){
         return departmentService.addDepartment(departmentEntity);
     }
 
     @PutMapping("department/{departmentId}")
-    public ApiResponse updateDepartment(@PathVariable int departmentId, @RequestBody DepartmentEntity departmentEntity){
+    public DepartmentEntity updateDepartment(@PathVariable int departmentId, @RequestBody DepartmentEntity departmentEntity){
         return departmentService.updateDepartment(departmentId,departmentEntity);
     }
 

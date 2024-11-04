@@ -80,11 +80,11 @@ public class DepartmentRepositoryTest {
                 eq("INSERT INTO department (departmentName, location) VALUES (?,?)"),
                 eq(departmentEntity.getDepartmentName()),
                 eq(departmentEntity.getLocation())))
-                .thenReturn(1);
+                .thenReturn(departmentEntity.getDepartmentId());
 
-        int rowsAffected = departmentRepository.save(departmentEntity);
+        DepartmentEntity department = departmentRepository.save(departmentEntity);
 
-        assertEquals(1,rowsAffected);
+        assertEquals(departmentEntity, department);
     }
 
     @Test
@@ -96,11 +96,11 @@ public class DepartmentRepositoryTest {
                 eq(departmentEntity.getDepartmentName()),
                 eq(departmentEntity.getLocation()),
                 eq(departmentEntity.getDepartmentId())))
-                .thenReturn(1);
+                .thenReturn(departmentEntity.getDepartmentId());
 
-        int rowsAffected = departmentRepository.update(departmentEntity);
+        DepartmentEntity department = departmentRepository.update(departmentEntity);
 
-        assertEquals(1,rowsAffected);
+        assertEquals(departmentEntity,department);
     }
 
     @Test

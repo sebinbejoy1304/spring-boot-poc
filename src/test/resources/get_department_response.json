@@ -1,0 +1,27 @@
+[
+  {
+    "departmentId": 1,
+    "departmentName": "Software Engineering",
+    "location": "Bangalore"
+  },
+  {
+    "departmentId": 2,
+    "departmentName": "Quality Analysis",
+    "location": "Hyderabad"
+  },
+  {
+    "departmentId": 3,
+    "departmentName": "HR",
+    "location": "Chennai"
+  },
+  {
+    "departmentId": 4,
+    "departmentName": "Finance",
+    "location": "Mumbai"
+  },
+  {
+    "departmentId": 5,
+    "departmentName": "Customer Support",
+    "location": "kochi"
+  }
+]

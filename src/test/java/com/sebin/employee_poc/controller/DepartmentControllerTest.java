@@ -59,26 +59,24 @@ public class DepartmentControllerTest {
     void addDepartmentTest(){
         DepartmentEntity departmentEntity = new DepartmentEntity(1,"IT","Bangalore");
 
-        ApiResponse mockResponse = new ApiResponse(200,"Department added successfully");
         when(departmentService.addDepartment(departmentEntity))
-                .thenReturn(mockResponse);
+                .thenReturn(departmentEntity);
 
-        ApiResponse response = departmentController.addDepartment(departmentEntity);
+        DepartmentEntity response = departmentController.addDepartment(departmentEntity);
 
-        assertEquals(mockResponse,response);
+        assertEquals(departmentEntity,response);
     }
 
     @Test
     void updateDepartmentTest(){
         int departmentId=1;
         DepartmentEntity departmentEntity = new DepartmentEntity(1,"IT","Bangalore");
-        ApiResponse mockResponse = new ApiResponse(200,"Department updated successfully");
 
-        when(departmentService.updateDepartment(departmentId,departmentEntity)).thenReturn(mockResponse);
+        when(departmentService.updateDepartment(departmentId,departmentEntity)).thenReturn(departmentEntity);
 
-        ApiResponse response = departmentController.updateDepartment(departmentId,departmentEntity);
+        DepartmentEntity response = departmentController.updateDepartment(departmentId,departmentEntity);
 
-        assertEquals(mockResponse,response);
+        assertEquals(departmentEntity,response);
     }
 
     @Test

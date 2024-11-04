@@ -40,19 +40,21 @@ public class DepartmentRepository {
         });
     }
 
-    public int save(DepartmentEntity departmentEntity){
+    public DepartmentEntity save(DepartmentEntity departmentEntity){
         String sql = "INSERT INTO department (departmentName, location) VALUES (?,?)";
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 departmentEntity.getDepartmentName(),
                 departmentEntity.getLocation());
+        return departmentEntity;
     }
 
-    public int update(DepartmentEntity departmentEntity){
+    public DepartmentEntity update(DepartmentEntity departmentEntity){
         String sql = "UPDATE department SET departmentName=?, location=? WHERE departmentId=?";
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 departmentEntity.getDepartmentName(),
                 departmentEntity.getLocation(),
                 departmentEntity.getDepartmentId());
+        return departmentEntity;
     }
 
     public int deleteById(int departmentId){
