@@ -49,12 +49,14 @@ public class EmployeeControllerTest {
     void addEmployeeTest(){
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
                 700000, 1, LocalDateTime.now(), LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Trainee",
+                700000, 1);
 
-        when(employeeService.addEmployee(employeeEntity)).thenReturn(employeeEntity);
+        when(employeeService.addEmployee(employeeEntity)).thenReturn(employeeResponse);
 
-        EmployeeEntity response = employeeController.addEmployee(employeeEntity);
+        EmployeeResponse response = employeeController.addEmployee(employeeEntity);
 
-        assertEquals(employeeEntity, response);
+        assertEquals(employeeResponse, response);
     }
 
     @Test

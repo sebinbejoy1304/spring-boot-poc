@@ -51,9 +51,9 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public EmployeeEntity addEmployee(EmployeeEntity employeeEntity) {
+    public EmployeeResponse addEmployee(EmployeeEntity employeeEntity) {
         employeeRepository.save(employeeEntity);
-        return employeeEntity;
+        return mapToEmployeeResponse(employeeEntity);
     }
 
     public EmployeeEntity updateEmployee(int employeeId, EmployeeEntity employeeEntity) {

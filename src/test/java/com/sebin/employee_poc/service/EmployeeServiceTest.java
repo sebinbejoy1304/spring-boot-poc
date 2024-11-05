@@ -105,12 +105,13 @@ public class EmployeeServiceTest {
     @Test
     void addEmployeeTest(){
         EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","HR",700000,3);
 
         when(employeeRepository.save(employeeEntity)).thenReturn(employeeEntity);
 
-        EmployeeEntity response = employeeService.addEmployee(employeeEntity);
+        EmployeeResponse response = employeeService.addEmployee(employeeEntity);
 
-        assertEquals(employeeEntity,response);
+        assertEquals(employeeResponse,response);
     }
 
     @Test
