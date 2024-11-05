@@ -72,12 +72,13 @@ public class DepartmentControllerTest {
     void updateDepartmentTest(){
         int departmentId=1;
         DepartmentEntity departmentEntity = new DepartmentEntity(1,"IT","Bangalore");
+        DepartmentResponse departmentResponse = new DepartmentResponse("IT","Bangalore");
 
-        when(departmentService.updateDepartment(departmentId,departmentEntity)).thenReturn(departmentEntity);
+        when(departmentService.updateDepartment(departmentId,departmentEntity)).thenReturn(departmentResponse);
 
-        DepartmentEntity response = departmentController.updateDepartment(departmentId,departmentEntity);
+        DepartmentResponse response = departmentController.updateDepartment(departmentId,departmentEntity);
 
-        assertEquals(departmentEntity,response);
+        assertEquals(departmentResponse,response);
     }
 
     @Test

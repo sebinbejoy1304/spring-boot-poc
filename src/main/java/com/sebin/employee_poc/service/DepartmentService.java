@@ -33,13 +33,13 @@ public class DepartmentService {
         return mapToDepartmentResponse(departmentEntity);
     }
 
-    public DepartmentEntity updateDepartment(int departmentId, DepartmentEntity departmentEntity){
+    public DepartmentResponse updateDepartment(int departmentId, DepartmentEntity departmentEntity){
         DepartmentEntity existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
         existingDepartment.setDepartmentName(departmentEntity.getDepartmentName());
         existingDepartment.setLocation(departmentEntity.getLocation());
         departmentRepository.update(existingDepartment);
-        return departmentEntity;
+        return mapToDepartmentResponse(departmentEntity);
     }
 
     public ErrorResponse deleteDepartment(int departmentId){

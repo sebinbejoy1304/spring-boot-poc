@@ -31,7 +31,7 @@ public class DepartmentController {
     }
 
     @PutMapping("department/{departmentId}")
-    public DepartmentEntity updateDepartment(@PathVariable int departmentId, @RequestBody DepartmentEntity departmentEntity){
+    public DepartmentResponse updateDepartment(@PathVariable int departmentId, @RequestBody DepartmentEntity departmentEntity){
         return departmentService.updateDepartment(departmentId,departmentEntity);
     }
 

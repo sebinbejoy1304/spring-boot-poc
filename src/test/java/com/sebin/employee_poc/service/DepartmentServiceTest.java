@@ -2,6 +2,7 @@ package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
+import com.sebin.employee_poc.model.DepartmentResponse;
 import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,26 +71,28 @@ public class DepartmentServiceTest {
     @Test
     void addDepartmentTest(){
         DepartmentEntity departmentEntity = new DepartmentEntity(1,"IT","Bangalore");
+        DepartmentResponse departmentResponse = new DepartmentResponse("IT","Bangalore");
 
         when(departmentRepository.save(departmentEntity))
                 .thenReturn(departmentEntity);
 
-        DepartmentEntity response = departmentService.addDepartment(departmentEntity);
+        DepartmentResponse response = departmentService.addDepartment(departmentEntity);
 
-        assertEquals(departmentEntity,response);
+        assertEquals(departmentResponse,response);
     }
 
     @Test
     void updateDepartmentTest_departmentExists(){
         int departmentId=1;
         DepartmentEntity mockDepartment = new DepartmentEntity(1,"IT","Bangalore");
+        DepartmentResponse departmentResponse = new DepartmentResponse("IT","Bangalore");
 
         when(departmentRepository.findById(departmentId)).thenReturn(Optional.of(mockDepartment));
         when(departmentRepository.update(mockDepartment)).thenReturn(mockDepartment);
 
-        DepartmentEntity response = departmentService.updateDepartment(departmentId,mockDepartment);
+        DepartmentResponse response = departmentService.updateDepartment(departmentId,mockDepartment);
 
-        assertEquals(mockDepartment,response);
+        assertEquals(departmentResponse,response);
     }
 
     @Test

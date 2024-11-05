@@ -56,7 +56,7 @@ public class EmployeeService {
         return mapToEmployeeResponse(employeeEntity);
     }
 
-    public EmployeeEntity updateEmployee(int employeeId, EmployeeEntity employeeEntity) {
+    public EmployeeResponse updateEmployee(int employeeId, EmployeeEntity employeeEntity) {
         EmployeeEntity existingEmployee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
         existingEmployee.setFirstName(employeeEntity.getFirstName());
@@ -65,7 +65,7 @@ public class EmployeeService {
         existingEmployee.setSalary(employeeEntity.getSalary());
         existingEmployee.setDepartmentId(employeeEntity.getDepartmentId());
         employeeRepository.update(existingEmployee);
-        return employeeEntity;
+        return mapToEmployeeResponse(employeeEntity);
     }
 
     public ErrorResponse deleteEmployee(int employeeId) {

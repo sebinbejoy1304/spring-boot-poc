@@ -64,12 +64,13 @@ public class EmployeeControllerTest {
         int employeeId=3;
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
                 700000, 1, LocalDateTime.now(), LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Trainee",700000, 1);
 
-        when(employeeService.updateEmployee(employeeId, employeeEntity)).thenReturn(employeeEntity);
+        when(employeeService.updateEmployee(employeeId, employeeEntity)).thenReturn(employeeResponse);
 
-        EmployeeEntity response = employeeController.updateEmployee(employeeId, employeeEntity);
+        EmployeeResponse response = employeeController.updateEmployee(employeeId, employeeEntity);
 
-        assertEquals(employeeEntity, response);
+        assertEquals(employeeResponse, response);
     }
 
     @Test

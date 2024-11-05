@@ -118,15 +118,16 @@ public class EmployeeServiceTest {
     void updateEmployeeTest_employeeExists(){
         int employeeId=1;
         EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","HR",700000,3);
 
         when(employeeRepository.findById(employeeId))
-                .thenReturn(Optional.of(new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now())));
+                .thenReturn(Optional.of(employeeEntity));
         when(employeeRepository.update(employeeEntity))
                 .thenReturn(employeeEntity);
 
-        EmployeeEntity response = employeeService.updateEmployee(employeeId,employeeEntity);
+        EmployeeResponse response = employeeService.updateEmployee(employeeId,employeeEntity);
 
-        assertEquals(employeeEntity,response);
+        assertEquals(employeeResponse,response);
     }
 
     @Test
