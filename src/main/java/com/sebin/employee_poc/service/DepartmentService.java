@@ -2,6 +2,7 @@ package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
+import com.sebin.employee_poc.model.DepartmentResponse;
 import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,10 @@ import java.util.List;
 public class DepartmentService {
     private final DepartmentRepository departmentRepository;
 
+    private DepartmentResponse mapToDepartmentResponse(DepartmentEntity departmentEntity){
+        return new DepartmentResponse(departmentEntity.getDepartmentName(),departmentEntity.getLocation());
+    }
+
     public List<DepartmentEntity> getAllDepartments(){
         return departmentRepository.findAll();
     }
@@ -23,9 +28,9 @@ public class DepartmentService {
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
     }
 
-    public DepartmentEntity addDepartment(DepartmentEntity departmentEntity){
+    public DepartmentResponse addDepartment(DepartmentEntity departmentEntity){
         departmentRepository.save(departmentEntity);
-        return departmentEntity;
+        return mapToDepartmentResponse(departmentEntity);
     }
 
     public DepartmentEntity updateDepartment(int departmentId, DepartmentEntity departmentEntity){

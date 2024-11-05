@@ -1,6 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
+import com.sebin.employee_poc.model.DepartmentResponse;
 import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.service.DepartmentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,13 +58,14 @@ public class DepartmentControllerTest {
     @Test
     void addDepartmentTest(){
         DepartmentEntity departmentEntity = new DepartmentEntity(1,"IT","Bangalore");
+        DepartmentResponse departmentResponse = new DepartmentResponse("IT","Bangalore");
 
         when(departmentService.addDepartment(departmentEntity))
-                .thenReturn(departmentEntity);
+                .thenReturn(departmentResponse);
 
-        DepartmentEntity response = departmentController.addDepartment(departmentEntity);
+        DepartmentResponse response = departmentController.addDepartment(departmentEntity);
 
-        assertEquals(departmentEntity,response);
+        assertEquals(departmentResponse,response);
     }
 
     @Test

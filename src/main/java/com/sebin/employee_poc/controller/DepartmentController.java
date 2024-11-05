@@ -1,6 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
+import com.sebin.employee_poc.model.DepartmentResponse;
 import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class DepartmentController {
     }
 
     @PostMapping("department/add")
-    public DepartmentEntity addDepartment(@RequestBody DepartmentEntity departmentEntity){
+    public DepartmentResponse addDepartment(@RequestBody DepartmentEntity departmentEntity){
         return departmentService.addDepartment(departmentEntity);
     }
 
