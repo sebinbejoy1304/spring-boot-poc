@@ -3,7 +3,7 @@ package com.sebin.employee_poc.service;
 import com.sebin.employee_poc.entity.EmployeeEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
 import com.sebin.employee_poc.exception.EmployeeNotFoundException;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import com.sebin.employee_poc.repository.EmployeeRepository;
@@ -51,12 +51,12 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public ApiResponse addEmployee(EmployeeEntity employeeEntity) {
+    public EmployeeEntity addEmployee(EmployeeEntity employeeEntity) {
         employeeRepository.save(employeeEntity);
-        return new ApiResponse(200,"Employee Added successfully");
+        return employeeEntity;
     }
 
-    public ApiResponse updateEmployee(int employeeId, EmployeeEntity employeeEntity) {
+    public EmployeeEntity updateEmployee(int employeeId, EmployeeEntity employeeEntity) {
         EmployeeEntity existingEmployee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
         existingEmployee.setFirstName(employeeEntity.getFirstName());
@@ -65,13 +65,13 @@ public class EmployeeService {
         existingEmployee.setSalary(employeeEntity.getSalary());
         existingEmployee.setDepartmentId(employeeEntity.getDepartmentId());
         employeeRepository.update(existingEmployee);
-        return new ApiResponse(200,"Employee updated successfully");
+        return employeeEntity;
     }
 
-    public ApiResponse deleteEmployee(int employeeId) {
+    public ErrorResponse deleteEmployee(int employeeId) {
         employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
         employeeRepository.delete(employeeId);
-        return new ApiResponse(200,"Employee deleted successfully");
+        return new ErrorResponse(200,"Employee deleted successfully");
     }
 }

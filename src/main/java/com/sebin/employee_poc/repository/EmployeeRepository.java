@@ -49,26 +49,27 @@ public class EmployeeRepository {
         });
     }
 
-    public int save(EmployeeEntity employeeEntity){
+    public EmployeeEntity save(EmployeeEntity employeeEntity){
         String sql = "INSERT INTO employee(firstName,lastName,jobRole,salary,departmentId) VALUES(?,?,?,?,?)";
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 employeeEntity.getFirstName(),
                 employeeEntity.getLastName(),
                 employeeEntity.getJobRole(),
                 employeeEntity.getSalary(),
                 employeeEntity.getDepartmentId());
+        return employeeEntity;
     }
 
-    public int update(EmployeeEntity employeeEntity){
+    public EmployeeEntity update(EmployeeEntity employeeEntity){
         String sql = "UPDATE employee SET firstName=?,lastName=?,jobRole=?,salary=?,departmentId=? WHERE employeeId=?";
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 employeeEntity.getFirstName(),
                 employeeEntity.getLastName(),
                 employeeEntity.getJobRole(),
                 employeeEntity.getSalary(),
                 employeeEntity.getDepartmentId(),
-                employeeEntity.getEmployeeId()
-        );
+                employeeEntity.getEmployeeId());
+        return employeeEntity;
     }
 
     public int delete(int employeeId){

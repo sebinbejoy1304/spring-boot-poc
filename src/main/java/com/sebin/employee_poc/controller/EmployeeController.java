@@ -1,7 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.EmployeeEntity;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -31,17 +31,17 @@ public class EmployeeController {
     }
 
     @PostMapping("employee/add")
-    public ApiResponse addEmployee(@RequestBody EmployeeEntity employeeEntity){
+    public EmployeeEntity addEmployee(@RequestBody EmployeeEntity employeeEntity){
         return employeeService.addEmployee(employeeEntity);
     }
 
     @PutMapping("employee/{employeeId}")
-    public ApiResponse updateEmployee(@PathVariable int employeeId, @RequestBody EmployeeEntity employeeEntity){
+    public EmployeeEntity updateEmployee(@PathVariable int employeeId, @RequestBody EmployeeEntity employeeEntity){
         return employeeService.updateEmployee(employeeId, employeeEntity);
     }
 
     @DeleteMapping("employee/{employeeId}")
-    public ApiResponse deleteEmployee(@PathVariable int employeeId){
+    public ErrorResponse deleteEmployee(@PathVariable int employeeId){
         return employeeService.deleteEmployee(employeeId);
     }
 

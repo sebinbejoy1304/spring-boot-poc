@@ -1,7 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.service.DepartmentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -82,11 +81,11 @@ public class DepartmentControllerTest {
     @Test
     void deleteDepartmentTest(){
         int departmentId=1;
-        ApiResponse mockResponse = new ApiResponse(200,"Department deleted successfully");
+        ErrorResponse mockResponse = new ErrorResponse(200,"Department deleted successfully");
 
         when(departmentService.deleteDepartment(departmentId)).thenReturn(mockResponse);
 
-        ApiResponse response = departmentController.deleteDepartment(departmentId);
+        ErrorResponse response = departmentController.deleteDepartment(departmentId);
 
         assertEquals(mockResponse,response);
     }

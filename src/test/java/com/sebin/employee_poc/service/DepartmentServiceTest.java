@@ -2,7 +2,7 @@ package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -110,9 +110,9 @@ public class DepartmentServiceTest {
         when(departmentRepository.findById(departmentId)).thenReturn(Optional.of(mockDepartment));
         when(departmentRepository.deleteById(departmentId)).thenReturn(1);
 
-        ApiResponse response = departmentService.deleteDepartment(departmentId);
+        ErrorResponse response = departmentService.deleteDepartment(departmentId);
 
-        assertEquals(200,response.getCode());
+        assertEquals(204,response.getCode());
     }
 
     @Test

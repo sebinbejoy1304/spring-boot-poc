@@ -2,13 +2,12 @@ package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,10 +37,10 @@ public class DepartmentService {
         return departmentEntity;
     }
 
-    public ApiResponse deleteDepartment(int departmentId){
+    public ErrorResponse deleteDepartment(int departmentId){
         departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
         departmentRepository.deleteById(departmentId);
-        return new ApiResponse(200,"Department deleted successfully");
+        return new ErrorResponse(204,"Department deleted successfully");
     }
 }

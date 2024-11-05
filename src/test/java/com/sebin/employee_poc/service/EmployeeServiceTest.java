@@ -4,7 +4,7 @@ import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.entity.EmployeeEntity;
 import com.sebin.employee_poc.exception.EmployeeNotFoundException;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
 import com.sebin.employee_poc.repository.EmployeeRepository;
@@ -106,11 +106,11 @@ public class EmployeeServiceTest {
     void addEmployeeTest(){
         EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
 
-        when(employeeRepository.save(employeeEntity)).thenReturn(1);
+        when(employeeRepository.save(employeeEntity)).thenReturn(employeeEntity);
 
-        ApiResponse response = employeeService.addEmployee(employeeEntity);
+        EmployeeEntity response = employeeService.addEmployee(employeeEntity);
 
-        assertEquals(200,response.getCode());
+        assertEquals(employeeEntity,response);
     }
 
     @Test
@@ -121,11 +121,11 @@ public class EmployeeServiceTest {
         when(employeeRepository.findById(employeeId))
                 .thenReturn(Optional.of(new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now())));
         when(employeeRepository.update(employeeEntity))
-                .thenReturn(1);
+                .thenReturn(employeeEntity);
 
-        ApiResponse response = employeeService.updateEmployee(employeeId,employeeEntity);
+        EmployeeEntity response = employeeService.updateEmployee(employeeId,employeeEntity);
 
-        assertEquals(200,response.getCode());
+        assertEquals(employeeEntity,response);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class EmployeeServiceTest {
         when(employeeRepository.delete(employeeId))
                 .thenReturn(1);
 
-        ApiResponse response = employeeService.deleteEmployee(employeeId);
+        ErrorResponse response = employeeService.deleteEmployee(employeeId);
 
         assertEquals(200,response.getCode());
     }

@@ -1,7 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("department/{departmentId}")
-    public ApiResponse deleteDepartment(@PathVariable int departmentId){
+    public ErrorResponse deleteDepartment(@PathVariable int departmentId){
         return departmentService.deleteDepartment(departmentId);
     }
 }

@@ -80,7 +80,7 @@ public class DepartmentRepositoryTest {
                 eq("INSERT INTO department (departmentName, location) VALUES (?,?)"),
                 eq(departmentEntity.getDepartmentName()),
                 eq(departmentEntity.getLocation())))
-                .thenReturn(departmentEntity.getDepartmentId());
+                .thenReturn(1);
 
         DepartmentEntity department = departmentRepository.save(departmentEntity);
 
@@ -96,7 +96,7 @@ public class DepartmentRepositoryTest {
                 eq(departmentEntity.getDepartmentName()),
                 eq(departmentEntity.getLocation()),
                 eq(departmentEntity.getDepartmentId())))
-                .thenReturn(departmentEntity.getDepartmentId());
+                .thenReturn(1);
 
         DepartmentEntity department = departmentRepository.update(departmentEntity);
 

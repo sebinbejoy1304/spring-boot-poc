@@ -85,9 +85,9 @@ public class EmployeeRepositoryTest {
                 ))
                 .thenReturn(1);
 
-        int rowsAffected = employeeRepository.save(mockEmployee);
+        EmployeeEntity response = employeeRepository.save(mockEmployee);
 
-        assertEquals(1,rowsAffected);
+        assertEquals(mockEmployee,response);
     }
 
     @Test
@@ -105,9 +105,9 @@ public class EmployeeRepositoryTest {
                 ))
                 .thenReturn(1);
 
-        int rowsAffected = employeeRepository.update(mockEmployee);
+        EmployeeEntity response = employeeRepository.update(mockEmployee);
 
-        assertEquals(1,rowsAffected);
+        assertEquals(mockEmployee, response);
     }
 
     @Test

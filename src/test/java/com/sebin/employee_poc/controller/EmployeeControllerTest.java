@@ -1,7 +1,7 @@
 package com.sebin.employee_poc.controller;
 
 import com.sebin.employee_poc.entity.EmployeeEntity;
-import com.sebin.employee_poc.model.ApiResponse;
+import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,13 +50,11 @@ public class EmployeeControllerTest {
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
                 700000, 1, LocalDateTime.now(), LocalDateTime.now());
 
-        ApiResponse mockResponse = new ApiResponse(200, "Employee added successfully");
+        when(employeeService.addEmployee(employeeEntity)).thenReturn(employeeEntity);
 
-        when(employeeService.addEmployee(employeeEntity)).thenReturn(mockResponse);
+        EmployeeEntity response = employeeController.addEmployee(employeeEntity);
 
-        ApiResponse response = employeeController.addEmployee(employeeEntity);
-
-        assertEquals(mockResponse, response);
+        assertEquals(employeeEntity, response);
     }
 
     @Test
@@ -64,13 +62,12 @@ public class EmployeeControllerTest {
         int employeeId=3;
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
                 700000, 1, LocalDateTime.now(), LocalDateTime.now());
-        ApiResponse mockResponse = new ApiResponse(200, "Employee updated successfully");
 
-        when(employeeService.updateEmployee(employeeId, employeeEntity)).thenReturn(mockResponse);
+        when(employeeService.updateEmployee(employeeId, employeeEntity)).thenReturn(employeeEntity);
 
-        ApiResponse response = employeeController.updateEmployee(employeeId, employeeEntity);
+        EmployeeEntity response = employeeController.updateEmployee(employeeId, employeeEntity);
 
-        assertEquals(mockResponse, response);
+        assertEquals(employeeEntity, response);
     }
 
     @Test
@@ -78,11 +75,11 @@ public class EmployeeControllerTest {
         int employeeId=3;
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
                 700000, 1, LocalDateTime.now(), LocalDateTime.now());
-        ApiResponse mockResponse = new ApiResponse(200, "Employee deleted successfully");
+        ErrorResponse mockResponse = new ErrorResponse(200, "Employee deleted successfully");
 
         when(employeeService.deleteEmployee(employeeId)).thenReturn(mockResponse);
 
-        ApiResponse response = employeeController.deleteEmployee(employeeId);
+        ErrorResponse response = employeeController.deleteEmployee(employeeId);
 
         assertEquals(mockResponse, response);
     }
