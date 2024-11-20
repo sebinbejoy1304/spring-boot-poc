@@ -1,6 +1,7 @@
 package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
+import com.sebin.employee_poc.exception.DepartmentAlreadyExists;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
 import com.sebin.employee_poc.model.DepartmentResponse;
 import com.sebin.employee_poc.model.ErrorResponse;
@@ -29,6 +30,8 @@ public class DepartmentService {
     }
 
     public DepartmentResponse addDepartment(DepartmentEntity departmentEntity){
+        if(departmentRepository.departmentExists(departmentEntity.getDepartmentName(),departmentEntity.getLocation()))
+            throw new DepartmentAlreadyExists("Department already exists");
         departmentRepository.save(departmentEntity);
         return mapToDepartmentResponse(departmentEntity);
     }

@@ -1,6 +1,7 @@
 package com.sebin.employee_poc.repository;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
+import com.sebin.employee_poc.exception.DepartmentAlreadyExists;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -38,6 +39,12 @@ public class DepartmentRepository {
             else
                 return Optional.empty();
         });
+    }
+
+    public boolean departmentExists (String departmentName, String location){
+        String sql = "SELECT COUNT(*) FROM department WHERE departmentName=? AND location=?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class,departmentName,location);
+        return count!=null & count>0;
     }
 
     public DepartmentEntity save(DepartmentEntity departmentEntity){
