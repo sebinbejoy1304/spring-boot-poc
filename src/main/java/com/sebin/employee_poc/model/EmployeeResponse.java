@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class EmployeeResponse {
     private String firstName;
+    private String lastName;
     private String jobRole;
     private double salary;
     private int departmentId;

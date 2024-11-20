@@ -22,6 +22,7 @@ public class EmployeeService {
     private EmployeeResponse mapToEmployeeResponse(EmployeeEntity employeeEntity) {
         return new EmployeeResponse(
                 employeeEntity.getFirstName(),
+                employeeEntity.getLastName(),
                 employeeEntity.getJobRole(),
                 employeeEntity.getSalary(),
                 employeeEntity.getDepartmentId()
