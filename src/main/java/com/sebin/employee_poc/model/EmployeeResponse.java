@@ -11,4 +11,6 @@ public class EmployeeResponse {
     private String jobRole;
     private double salary;
     private int departmentId;
+    private String departmentName;
+    private String location;
 }

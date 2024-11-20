@@ -1,5 +1,6 @@
 package com.sebin.employee_poc.service;
 
+import com.sebin.employee_poc.entity.DepartmentEntity;
 import com.sebin.employee_poc.entity.EmployeeEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
 import com.sebin.employee_poc.exception.EmployeeAlreadyExistsException;
@@ -22,12 +23,18 @@ public class EmployeeService {
     private final DepartmentRepository departmentRepository;
 
     private EmployeeResponse mapToEmployeeResponse(EmployeeEntity employeeEntity) {
+
+        DepartmentEntity departmentEntity = departmentRepository.findById(employeeEntity.getDepartmentId())
+                .orElseThrow(()->new DepartmentNotFoundException("Department not found with id: "+employeeEntity.getDepartmentId()));
+
         return new EmployeeResponse(
                 employeeEntity.getFirstName(),
                 employeeEntity.getLastName(),
                 employeeEntity.getJobRole(),
                 employeeEntity.getSalary(),
-                employeeEntity.getDepartmentId()
+                employeeEntity.getDepartmentId(),
+                departmentEntity.getDepartmentName(),
+                departmentEntity.getLocation()
         );
     }
 
