@@ -12,8 +12,8 @@ public class EmployeeEntity {
     private String firstName;
     private String lastName;
     private String jobRole;
-    private double salary;
-    private int departmentId;
+    private Double salary;
+    private Integer departmentId;
     private LocalDateTime createdDateTime;
     private LocalDateTime modifiedDateTime;
 }

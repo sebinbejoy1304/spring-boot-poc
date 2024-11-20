@@ -32,11 +32,11 @@ public class EmployeeService {
     }
 
     private boolean isEmployeeUnchanged(EmployeeEntity existingEmployee, EmployeeEntity newEmployee) {
-        return existingEmployee.getFirstName().equals(newEmployee.getFirstName())
-                && existingEmployee.getLastName().equals(newEmployee.getLastName())
-                && existingEmployee.getJobRole().equals(newEmployee.getJobRole())
-                && existingEmployee.getSalary() == newEmployee.getSalary()
-                && existingEmployee.getDepartmentId() == newEmployee.getDepartmentId();
+        return (newEmployee.getFirstName()==null || existingEmployee.getFirstName().equals(newEmployee.getFirstName()))
+                && (newEmployee.getLastName()==null || existingEmployee.getLastName().equals(newEmployee.getLastName()))
+                && (newEmployee.getJobRole() == null || existingEmployee.getJobRole().equals(newEmployee.getJobRole()))
+                && (newEmployee.getSalary() == null || existingEmployee.getSalary() == newEmployee.getSalary()
+                && (newEmployee.getDepartmentId() == null || existingEmployee.getDepartmentId() == newEmployee.getDepartmentId()));
     }
 
     public List<EmployeeResponse> getAllEmployees() {
@@ -78,11 +78,21 @@ public class EmployeeService {
             throw new NoChangeInEmployeeException("No changes detected for employee with id: " + employeeId);
         }
 
-        existingEmployee.setFirstName(employeeEntity.getFirstName());
-        existingEmployee.setLastName(employeeEntity.getLastName());
-        existingEmployee.setJobRole(employeeEntity.getJobRole());
-        existingEmployee.setSalary(employeeEntity.getSalary());
-        existingEmployee.setDepartmentId(employeeEntity.getDepartmentId());
+        if (employeeEntity.getFirstName() != null) {
+            existingEmployee.setFirstName(employeeEntity.getFirstName());
+        }
+        if (employeeEntity.getLastName() != null) {
+            existingEmployee.setLastName(employeeEntity.getLastName());
+        }
+        if (employeeEntity.getJobRole() != null) {
+            existingEmployee.setJobRole(employeeEntity.getJobRole());
+        }
+        if (employeeEntity.getSalary() != null) {
+            existingEmployee.setSalary(employeeEntity.getSalary());
+        }
+        if (employeeEntity.getDepartmentId() != null) {
+            existingEmployee.setDepartmentId(employeeEntity.getDepartmentId());
+        }
 
         employeeRepository.update(existingEmployee);
         return mapToEmployeeResponse(existingEmployee);
