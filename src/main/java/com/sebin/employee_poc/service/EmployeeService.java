@@ -2,6 +2,7 @@ package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.EmployeeEntity;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
+import com.sebin.employee_poc.exception.EmployeeAlreadyExistsException;
 import com.sebin.employee_poc.exception.EmployeeNotFoundException;
 import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
@@ -53,6 +54,9 @@ public class EmployeeService {
     }
 
     public EmployeeResponse addEmployee(EmployeeEntity employeeEntity) {
+        if (employeeRepository.employeeExists(employeeEntity.getFirstName(), employeeEntity.getLastName())) {
+            throw new EmployeeAlreadyExistsException("Employee with the same name already exists.");
+        }
         employeeRepository.save(employeeEntity);
         return mapToEmployeeResponse(employeeEntity);
     }

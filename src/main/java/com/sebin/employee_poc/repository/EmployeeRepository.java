@@ -49,6 +49,12 @@ public class EmployeeRepository {
         });
     }
 
+    public boolean employeeExists(String firstName, String lastName){
+        String sql = "SELECT COUNT(*) FROM employee WHERE firstname=? AND lastname=?";
+        Integer count = jdbcTemplate.queryForObject(sql,Integer.class,firstName,lastName);
+        return count != null & count>0;
+    }
+
     public EmployeeEntity save(EmployeeEntity employeeEntity){
         String sql = "INSERT INTO employee(firstName,lastName,jobRole,salary,departmentId) VALUES(?,?,?,?,?)";
         jdbcTemplate.update(sql,
