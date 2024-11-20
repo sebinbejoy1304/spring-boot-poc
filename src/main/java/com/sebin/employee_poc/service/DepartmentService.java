@@ -1,8 +1,10 @@
 package com.sebin.employee_poc.service;
 
 import com.sebin.employee_poc.entity.DepartmentEntity;
+import com.sebin.employee_poc.entity.EmployeeEntity;
 import com.sebin.employee_poc.exception.DepartmentAlreadyExists;
 import com.sebin.employee_poc.exception.DepartmentNotFoundException;
+import com.sebin.employee_poc.exception.NoChangeInDepartmentException;
 import com.sebin.employee_poc.model.DepartmentResponse;
 import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.repository.DepartmentRepository;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +21,11 @@ public class DepartmentService {
 
     private DepartmentResponse mapToDepartmentResponse(DepartmentEntity departmentEntity){
         return new DepartmentResponse(departmentEntity.getDepartmentName(),departmentEntity.getLocation());
+    }
+
+    private boolean isDepartmentUnchanged(DepartmentEntity existingDepartment, DepartmentEntity newDepartment) {
+        return (newDepartment.getDepartmentName() == null || Objects.equals(existingDepartment.getDepartmentName(), newDepartment.getDepartmentName()))
+                && (newDepartment.getLocation() == null || Objects.equals(existingDepartment.getLocation(), newDepartment.getLocation()));
     }
 
     public List<DepartmentEntity> getAllDepartments(){
@@ -39,10 +47,17 @@ public class DepartmentService {
     public DepartmentResponse updateDepartment(int departmentId, DepartmentEntity departmentEntity){
         DepartmentEntity existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
-        existingDepartment.setDepartmentName(departmentEntity.getDepartmentName());
-        existingDepartment.setLocation(departmentEntity.getLocation());
+
+        if(isDepartmentUnchanged(departmentEntity,existingDepartment))
+            throw new NoChangeInDepartmentException("No change in department");
+
+        if (departmentEntity.getDepartmentName() != null)
+            existingDepartment.setDepartmentName(departmentEntity.getDepartmentName());
+        if (departmentEntity.getLocation() != null )
+            existingDepartment.setLocation(departmentEntity.getLocation());
+
         departmentRepository.update(existingDepartment);
-        return mapToDepartmentResponse(departmentEntity);
+        return mapToDepartmentResponse(existingDepartment);
     }
 
     public ErrorResponse deleteDepartment(int departmentId){

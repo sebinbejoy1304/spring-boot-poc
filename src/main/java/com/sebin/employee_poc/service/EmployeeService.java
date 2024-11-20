@@ -74,25 +74,19 @@ public class EmployeeService {
         EmployeeEntity existingEmployee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id:" + employeeId));
 
-        if (isEmployeeUnchanged(existingEmployee, employeeEntity)) {
+        if (isEmployeeUnchanged(existingEmployee, employeeEntity))
             throw new NoChangeInEmployeeException("No changes detected for employee with id: " + employeeId);
-        }
 
-        if (employeeEntity.getFirstName() != null) {
+        if (employeeEntity.getFirstName() != null)
             existingEmployee.setFirstName(employeeEntity.getFirstName());
-        }
-        if (employeeEntity.getLastName() != null) {
+        if (employeeEntity.getLastName() != null)
             existingEmployee.setLastName(employeeEntity.getLastName());
-        }
-        if (employeeEntity.getJobRole() != null) {
+        if (employeeEntity.getJobRole() != null)
             existingEmployee.setJobRole(employeeEntity.getJobRole());
-        }
-        if (employeeEntity.getSalary() != null) {
+        if (employeeEntity.getSalary() != null)
             existingEmployee.setSalary(employeeEntity.getSalary());
-        }
-        if (employeeEntity.getDepartmentId() != null) {
+        if (employeeEntity.getDepartmentId() != null)
             existingEmployee.setDepartmentId(employeeEntity.getDepartmentId());
-        }
 
         employeeRepository.update(existingEmployee);
         return mapToEmployeeResponse(existingEmployee);
