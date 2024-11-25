@@ -42,8 +42,8 @@ public class EmployeeService {
         return (newEmployee.getFirstName()==null || existingEmployee.getFirstName().equals(newEmployee.getFirstName()))
                 && (newEmployee.getLastName()==null || existingEmployee.getLastName().equals(newEmployee.getLastName()))
                 && (newEmployee.getJobRole() == null || existingEmployee.getJobRole().equals(newEmployee.getJobRole()))
-                && (newEmployee.getSalary() == null || existingEmployee.getSalary() == newEmployee.getSalary()
-                && (newEmployee.getDepartmentId() == null || existingEmployee.getDepartmentId() == newEmployee.getDepartmentId()));
+                && (newEmployee.getSalary() == null || existingEmployee.getSalary().equals(newEmployee.getSalary())
+                && (newEmployee.getDepartmentId() == null || existingEmployee.getDepartmentId().equals( newEmployee.getDepartmentId())));
     }
 
     public List<EmployeeResponse> getAllEmployees() {

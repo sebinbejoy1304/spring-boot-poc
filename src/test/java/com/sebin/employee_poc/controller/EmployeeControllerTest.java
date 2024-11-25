@@ -32,8 +32,8 @@ public class EmployeeControllerTest {
 
     @Test
     void getAllEmployeesTest(){
-        EmployeeResponse employee1 = new EmployeeResponse("Shyam","HR",700000,3);
-        EmployeeResponse employee2 = new EmployeeResponse("Priya","Senior Software Engineer",1500000,1);
+        EmployeeResponse employee1 = new EmployeeResponse("Shyam","Prasad","HR",700000.0,3,"HR","Kochi");
+        EmployeeResponse employee2 = new EmployeeResponse("Priya","Kumari","Senior Software Engineer",1500000,1,"Software","Bangalore");
         List<EmployeeResponse> mockResponses = Arrays.asList(employee1,employee2);
 
         when(employeeService.getAllEmployees()).thenReturn(mockResponses);
@@ -48,9 +48,8 @@ public class EmployeeControllerTest {
     @Test
     void addEmployeeTest(){
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
-                700000, 1, LocalDateTime.now(), LocalDateTime.now());
-        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Trainee",
-                700000, 1);
+                700000.0, 1, LocalDateTime.now(), LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Prasad","HR",700000.0,3,"HR","Kochi");
 
         when(employeeService.addEmployee(employeeEntity)).thenReturn(employeeResponse);
 
@@ -63,8 +62,8 @@ public class EmployeeControllerTest {
     void updateEmployeeTest(){
         int employeeId=3;
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
-                700000, 1, LocalDateTime.now(), LocalDateTime.now());
-        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Trainee",700000, 1);
+                700000.0, 1, LocalDateTime.now(), LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Prasad","HR",700000.0,3,"HR","Kochi");
 
         when(employeeService.updateEmployee(employeeId, employeeEntity)).thenReturn(employeeResponse);
 
@@ -77,7 +76,7 @@ public class EmployeeControllerTest {
     void deleteEmployeeTest(){
         int employeeId=3;
         EmployeeEntity employeeEntity = new EmployeeEntity(1,"Shyam","Prasad","Trainee",
-                700000, 1, LocalDateTime.now(), LocalDateTime.now());
+                700000.0, 1, LocalDateTime.now(), LocalDateTime.now());
         ErrorResponse mockResponse = new ErrorResponse(200, "Employee deleted successfully");
 
         when(employeeService.deleteEmployee(employeeId)).thenReturn(mockResponse);
@@ -90,7 +89,7 @@ public class EmployeeControllerTest {
     @Test
     void getEmployeeByIdTest(){
         int employeeId=3;
-        EmployeeResponse mockResponse = new EmployeeResponse("Shyam","HR",700000,3);
+        EmployeeResponse mockResponse = new EmployeeResponse("Shyam","Prasad","HR",700000.0,3,"HR","Kochi");
 
         when(employeeService.getEmployeeById(employeeId)).thenReturn(mockResponse);
 
@@ -102,8 +101,8 @@ public class EmployeeControllerTest {
     @Test
     void getEmployeesByDepartmentTest(){
         int departmentId = 2;
-        EmployeeResponse employee1 = new EmployeeResponse("Shyam","HR",700000,3);
-        EmployeeResponse employee2 = new EmployeeResponse("Priya","Senior Software Engineer",1500000,1);
+        EmployeeResponse employee1 = new EmployeeResponse("Shyam","Prasad","HR",700000.0,3,"HR","Kochi");
+        EmployeeResponse employee2 = new EmployeeResponse("Priya","Kumari","Senior Software Engineer",1500000,1,"Software","Bangalore");
         List<EmployeeResponse> mockResponses = Arrays.asList(employee1,employee2);
 
         when(employeeService.getEmployeesByDepartment(departmentId)).thenReturn(mockResponses);

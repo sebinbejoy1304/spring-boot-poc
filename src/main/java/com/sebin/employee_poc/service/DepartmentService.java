@@ -24,8 +24,8 @@ public class DepartmentService {
     }
 
     private boolean isDepartmentUnchanged(DepartmentEntity existingDepartment, DepartmentEntity newDepartment) {
-        return (newDepartment.getDepartmentName() == null || Objects.equals(existingDepartment.getDepartmentName(), newDepartment.getDepartmentName()))
-                && (newDepartment.getLocation() == null || Objects.equals(existingDepartment.getLocation(), newDepartment.getLocation()));
+        return (newDepartment.getDepartmentName() == null || existingDepartment.getDepartmentName().equals( newDepartment.getDepartmentName()))
+                && (newDepartment.getLocation() == null || existingDepartment.getLocation().equals( newDepartment.getLocation()));
     }
 
     public List<DepartmentEntity> getAllDepartments(){

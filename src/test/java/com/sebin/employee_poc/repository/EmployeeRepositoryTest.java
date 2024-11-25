@@ -36,8 +36,8 @@ public class EmployeeRepositoryTest {
 
     @Test
     void findAllTest(){
-        EmployeeEntity employee1 = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
-        EmployeeEntity employee2 = new EmployeeEntity(2, "Priya","Ramesh","Analyst",700000,4, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employee1 = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employee2 = new EmployeeEntity(2, "Priya","Ramesh","Analyst",700000.0,4, LocalDateTime.now(),LocalDateTime.now());
         List<EmployeeEntity> mockResponses = Arrays.asList(employee1,employee2);
 
         when(jdbcTemplate.query(eq("SELECT * FROM employee"),any(RowMapper.class))).thenReturn(mockResponses);
@@ -50,7 +50,7 @@ public class EmployeeRepositoryTest {
     @Test
     void findByIdTest_employeeExists(){
         int employeeId = 1;
-        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
 
         when(jdbcTemplate.query(eq("SELECT * FROM employee WHERE employeeId=1"), any(ResultSetExtractor.class)))
                 .thenReturn(Optional.of(mockEmployee));
@@ -73,7 +73,7 @@ public class EmployeeRepositoryTest {
 
     @Test
     void employeeSaveTest(){
-        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
 
         when(jdbcTemplate.update(
                 eq("INSERT INTO employee(firstName,lastName,jobRole,salary,departmentId) VALUES(?,?,?,?,?)"),
@@ -92,7 +92,7 @@ public class EmployeeRepositoryTest {
 
     @Test
     void employeeUpdateTest(){
-        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
 
         when(jdbcTemplate.update(
                 eq("UPDATE employee SET firstName=?,lastName=?,jobRole=?,salary=?,departmentId=? WHERE employeeId=?"),

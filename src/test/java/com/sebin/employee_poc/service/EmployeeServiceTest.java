@@ -41,10 +41,14 @@ public class EmployeeServiceTest {
 
     @Test
     void getAllEmployeesTest(){
-        EmployeeEntity employee1 = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
-        EmployeeEntity employee2 = new EmployeeEntity(2, "Priya","Ramesh","Analyst",700000,4, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employee1 = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employee2 = new EmployeeEntity(2, "Priya","Ramesh","Analyst",700000.0,4, LocalDateTime.now(),LocalDateTime.now());
         List<EmployeeEntity> mockResponses = Arrays.asList(employee1,employee2);
+        DepartmentEntity department1 = new DepartmentEntity(3,"HR","Chennai");
+        DepartmentEntity department2 = new DepartmentEntity(4,"Finance","Mumbai");
 
+        when(departmentRepository.findById(employee1.getDepartmentId())).thenReturn(Optional.of(department1));
+        when(departmentRepository.findById(employee2.getDepartmentId())).thenReturn(Optional.of(department2));
         when(employeeRepository.findAll()).thenReturn(mockResponses);
 
         List<EmployeeResponse> responses = employeeService.getAllEmployees();
@@ -56,8 +60,10 @@ public class EmployeeServiceTest {
     @Test
     void getEmployeeById_employeeExists(){
         int employeeId = 5;
-        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity mockEmployee = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
+        DepartmentEntity mockDepartment = new DepartmentEntity(3,"HR","Chennai");
 
+        when(departmentRepository.findById(mockEmployee.getDepartmentId())).thenReturn(Optional.of(mockDepartment));
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(mockEmployee));
 
         EmployeeResponse response = employeeService.getEmployeeById(employeeId);
@@ -77,9 +83,9 @@ public class EmployeeServiceTest {
     @Test
     void getEmployeesByDepartment_departmentExists(){
         int departmentId = 3;
-        EmployeeEntity employee1 = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
-        EmployeeEntity employee2 = new EmployeeEntity(2, "Priya","Ramesh","Analyst",700000,4, LocalDateTime.now(),LocalDateTime.now());
-        EmployeeEntity employee3 = new EmployeeEntity(3, "Sathya","Shiva","Senior HR",1000000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employee1 = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employee2 = new EmployeeEntity(2, "Priya","Ramesh","Analyst",700000.0,4, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employee3 = new EmployeeEntity(3, "Sathya","Shiva","Senior HR",1000000.0,3, LocalDateTime.now(),LocalDateTime.now());
 
         List<EmployeeEntity> mockResponses = Arrays.asList(employee1,employee2,employee3);
 
@@ -104,9 +110,11 @@ public class EmployeeServiceTest {
 
     @Test
     void addEmployeeTest(){
-        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
-        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","HR",700000,3);
+        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Prasad","HR",700000.0,3,"HR","Chennai");
+        DepartmentEntity mockDepartment = new DepartmentEntity(3,"HR","Chennai");
 
+        when(departmentRepository.findById(employeeEntity.getDepartmentId())).thenReturn(Optional.of(mockDepartment));
         when(employeeRepository.save(employeeEntity)).thenReturn(employeeEntity);
 
         EmployeeResponse response = employeeService.addEmployee(employeeEntity);
@@ -117,15 +125,19 @@ public class EmployeeServiceTest {
     @Test
     void updateEmployeeTest_employeeExists(){
         int employeeId=1;
-        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
-        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","HR",700000,3);
+        EmployeeEntity oldEmployeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity newEmployeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",1000000.0,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeResponse employeeResponse = new EmployeeResponse("Shyam","Prasad","HR",1000000.0,3,"HR","Chennai");
+        DepartmentEntity mockDepartment = new DepartmentEntity(3,"HR","Chennai");
+
+        when(departmentRepository.findById(oldEmployeeEntity.getDepartmentId())).thenReturn(Optional.of(mockDepartment));
 
         when(employeeRepository.findById(employeeId))
-                .thenReturn(Optional.of(employeeEntity));
-        when(employeeRepository.update(employeeEntity))
-                .thenReturn(employeeEntity);
+                .thenReturn(Optional.of(oldEmployeeEntity));
+        when(employeeRepository.update(oldEmployeeEntity))
+                .thenReturn(newEmployeeEntity);
 
-        EmployeeResponse response = employeeService.updateEmployee(employeeId,employeeEntity);
+        EmployeeResponse response = employeeService.updateEmployee(employeeId,newEmployeeEntity);
 
         assertEquals(employeeResponse,response);
     }
@@ -133,7 +145,7 @@ public class EmployeeServiceTest {
     @Test
     void updateEmployeeTest_employeeDoesNotExist(){
         int employeeId=1;
-        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now());
+        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now());
 
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
 
@@ -144,7 +156,7 @@ public class EmployeeServiceTest {
     void deleteEmployeeTest_employeeExists(){
         int employeeId=1;
         when(employeeRepository.findById(employeeId))
-                .thenReturn(Optional.of(new EmployeeEntity(1, "Shyam","Prasad","HR",700000,3, LocalDateTime.now(),LocalDateTime.now())));
+                .thenReturn(Optional.of(new EmployeeEntity(1, "Shyam","Prasad","HR",700000.0,3, LocalDateTime.now(),LocalDateTime.now())));
         when(employeeRepository.delete(employeeId))
                 .thenReturn(1);
 

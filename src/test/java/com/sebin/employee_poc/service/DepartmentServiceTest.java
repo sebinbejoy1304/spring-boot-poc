@@ -84,13 +84,14 @@ public class DepartmentServiceTest {
     @Test
     void updateDepartmentTest_departmentExists(){
         int departmentId=1;
-        DepartmentEntity mockDepartment = new DepartmentEntity(1,"IT","Bangalore");
+        DepartmentEntity mockOldDepartment = new DepartmentEntity(1,"Information Technology","Bangalore");
+        DepartmentEntity mockNewDepartment = new DepartmentEntity(1,"IT","Bangalore");
         DepartmentResponse departmentResponse = new DepartmentResponse("IT","Bangalore");
 
-        when(departmentRepository.findById(departmentId)).thenReturn(Optional.of(mockDepartment));
-        when(departmentRepository.update(mockDepartment)).thenReturn(mockDepartment);
+        when(departmentRepository.findById(departmentId)).thenReturn(Optional.of(mockOldDepartment));
+        when(departmentRepository.update(mockNewDepartment)).thenReturn(mockNewDepartment);
 
-        DepartmentResponse response = departmentService.updateDepartment(departmentId,mockDepartment);
+        DepartmentResponse response = departmentService.updateDepartment(departmentId,mockNewDepartment);
 
         assertEquals(departmentResponse,response);
     }
