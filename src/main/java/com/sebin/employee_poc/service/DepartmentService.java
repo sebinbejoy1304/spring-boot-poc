@@ -48,7 +48,7 @@ public class DepartmentService {
         DepartmentEntity existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(()->new DepartmentNotFoundException("Department Not Found with Id:"+departmentId));
 
-        if(isDepartmentUnchanged(departmentEntity,existingDepartment))
+        if(isDepartmentUnchanged(existingDepartment,departmentEntity))
             throw new NoChangeInDepartmentException("No change in department");
 
         if (departmentEntity.getDepartmentName() != null)
