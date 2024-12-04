@@ -66,7 +66,6 @@ public class DepartmentService {
         DepartmentEntity existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(()->{
                     logger.error("Department not found with ID: {}", departmentId);
-                    System.out.println("Department not found with ID: "+departmentId);
                     return  new DepartmentNotFoundException("Department Not Found with Id:"+departmentId);
                 });
 
