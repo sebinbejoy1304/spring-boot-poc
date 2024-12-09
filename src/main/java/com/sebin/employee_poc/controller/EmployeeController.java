@@ -5,6 +5,7 @@ import com.sebin.employee_poc.model.ErrorResponse;
 import com.sebin.employee_poc.model.EmployeeResponse;
 import com.sebin.employee_poc.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("employee/{employeeId}")
     public EmployeeResponse getEmployeeById(@PathVariable int employeeId){
         return employeeService.getEmployeeById(employeeId);

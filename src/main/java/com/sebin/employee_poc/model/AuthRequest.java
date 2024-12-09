@@ -1,4 +1,4 @@
-package com.sebin.employee_poc.entity;
+package com.sebin.employee_poc.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

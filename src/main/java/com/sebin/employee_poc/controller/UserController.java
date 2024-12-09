@@ -1,6 +1,6 @@
 package com.sebin.employee_poc.controller;
 
-import com.sebin.employee_poc.entity.AuthRequest;
+import com.sebin.employee_poc.model.AuthRequest;
 import com.sebin.employee_poc.entity.UserInfo;
 import com.sebin.employee_poc.service.JwtService;
 import com.sebin.employee_poc.service.UserInfoService;

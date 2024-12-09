@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.Optional;
 
@@ -21,12 +22,15 @@ public class UserInfoService implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserInfo> userDetail = repository.findByEmail(username); // Assuming 'email' is used as username
+    public UserDetails loadUserByUsername(String email) {
+        UserInfo user = repository.findByEmail(email.toLowerCase())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
-        // Converting UserInfo to UserDetails
-        return userDetail.map(UserInfoDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        return User.builder()
+                .username(user.getEmail().toLowerCase()) // Set email as username
+                .password(user.getPassword())
+                .authorities(user.getRoles())
+                .build();
     }
 
     public String addUser(UserInfo userInfo) {
