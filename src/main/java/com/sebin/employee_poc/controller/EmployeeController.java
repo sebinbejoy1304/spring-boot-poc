@@ -21,7 +21,6 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("employee/{employeeId}")
     public EmployeeResponse getEmployeeById(@PathVariable int employeeId){
         return employeeService.getEmployeeById(employeeId);
